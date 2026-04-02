@@ -1,0 +1,25 @@
+{
+  "name": "trackpro",
+  "version": "1.0.0",
+  "description": "a simple todo app to track the productivity",
+  "keywords": [
+    "Todo",
+    "practice",
+    "fullstack"
+  ],
+  "license": "ISC",
+  "author": "Abhay Pandey",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.3"
+  }
+}

@@ -19,24 +19,61 @@ const registerUser = asyncHandler(async (req, res) => {
         $or: [{ username }, { email }]
     })
 
-    if(existingUser){
-        throw new ApiError(400 , 'User with this email or password already exists')
+    if (existingUser) {
+        throw new ApiError(400, 'User with this email or password already exists')
     }
 
     const user = await User.create({
-        username ,
-        email , 
+        username,
+        email,
         password
     })
 
     const createdUser = await User.findById(user._id).select('-password')
-    if(!createdUser){
-        throw new ApiError(500 , 'User not created ')
+    if (!createdUser) {
+        throw new ApiError(500, 'User not created ')
     }
 
-    return res 
-    .status(201)
-    .json(new ApiResponse(201 , createdUser , 'user created successfully'))
+    return res
+        .status(201)
+        .json(new ApiResponse(201, createdUser, 'user created successfully'))
 })
 
-export { registerUser }
+const loginUser = asyncHandler(async (req, res) => {
+    const { username, password } = req.body
+
+    if (!username || !password || username.trim() === '' || password.trim() === '') {
+        throw new ApiError(400, 'Username or password can not be empty')
+    }
+
+    // matching username in database
+    const user = await User.findOne({ username })
+
+    if (!user) {
+        throw new ApiError(404, 'Invalid user credentials')
+    }
+
+
+    const isCorrectPassword = await user.isPasswordCorrect(password)
+
+    if (!isCorrectPassword) {
+        throw new ApiError(401, 'Invalid Credentials')
+    }
+
+    const accessToken = await user.generateAccessToken()
+
+    const loggedInUser = await User.findById(user._id).select('-password')
+
+
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
+    return res
+        .status(200)
+        .cookie('accessToken', accessToken, options)
+        .json(new ApiResponse(200, { loggedInUser, accessToken }, 'user logged in successfully'))
+})
+
+export { registerUser, loginUser }

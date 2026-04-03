@@ -18,7 +18,7 @@ import userRoutes from './routes/user.routes.js'
 import todoRoutes from './routes/todo.routes.js'
 
 // declaration of routes
-app.use('api/v1/user' , userRoutes)
-app.use('api/v1/todo' , todoRoutes)
+app.use('/api/v1/user' , userRoutes)
+app.use('/api/v1/todo' , todoRoutes)
 
 export default app 

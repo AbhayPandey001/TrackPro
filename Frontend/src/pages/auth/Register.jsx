@@ -23,7 +23,8 @@ export default function Register() {
 
       navigate('/login')
     } catch (error) {
-      console.log("FULL ERROR:", error);
+      console.log(error.response)
+        alert(error.response?.data?.message)
     }
   }
 

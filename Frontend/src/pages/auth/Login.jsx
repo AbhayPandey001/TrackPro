@@ -1,13 +1,27 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export default function Login() {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
+        try {
+            const res = await axios.post('http://localhost:3000/api/v1/user/login',
+                { username, password },
+                { withCredentials: true }
+            )
+
+            alert('Logged in Succesfully')
+            navigate('/dashboard')
+        } catch (error) {
+
+            alert(error.response?.data?.message || "Login failed");
+        }
     }
 
     return (

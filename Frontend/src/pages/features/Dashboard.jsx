@@ -1,7 +1,21 @@
 import React from 'react'
 import '../../styles/DashboardStyles.css'
+import { logoutUser } from '../../api/authApi.js'
+import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
+
+    const navigate = useNavigate()
+    // logout functionality 
+    const logoutHandler = async () => {
+        try {
+            await logoutUser()
+            navigate('/login')
+        } catch (error) {
+            alert(error.response?.data?.message)
+        }
+    }
+
     return (
         <div className='dashboard-container'>
             <div className="navbar">
@@ -14,7 +28,9 @@ export default function Dashboard() {
                 <div className="nav-right">
                     <button
                         type="button"
-                        className='nav-to-right'>
+                        className='nav-to-right'
+                        onClick={logoutHandler}
+                        >
                         Logout
                     </button>
                 </div>

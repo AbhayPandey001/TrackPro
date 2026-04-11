@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route , Navigate } from 'react-router-
 import Register from '../pages/auth/Register.jsx';
 import Login from '../pages/auth/Login.jsx';
 import Dashboard from '../pages/features/Dashboard.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx'
 
 
 export default function AppRoutes() {
@@ -13,7 +14,7 @@ export default function AppRoutes() {
                 <Route path='/login' element={<Login />} />
 
                 {/* protected route */}
-                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/dashboard' element={<ProtectedRoute>  <Dashboard /> </ProtectedRoute>} />
 
             </Routes>
         </Router>

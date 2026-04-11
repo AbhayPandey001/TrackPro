@@ -11,15 +11,13 @@ export default function Login() {
     const submitHandler = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:3000/api/v1/user/login',
+            await axios.post('http://localhost:3000/api/v1/user/login',
                 { username, password },
                 { withCredentials: true }
             )
-
             alert('Logged in Succesfully')
             navigate('/dashboard')
         } catch (error) {
-
             alert(error.response?.data?.message || "Login failed");
         }
     }

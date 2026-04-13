@@ -20,8 +20,36 @@ const getTodos = async () => {
     return res.data
 }
 
+// toggle Completed
+const toggleComplete = async (id) => {
+    const res = await axios.patch(`${base}${id}/toggle`,
+        {},
+        { withCredentials: true }
+    )
+    return res.data
+}
+
+//deletet todo
+const deleteTodo = async (id) => {
+    const res = await axios.delete(`${base}${id}`,
+        { withCredentials: true }
+    )
+    return res.data
+}
+
+// update todo
+const updateTodo = async (id, content) => {
+    const res = await axios.patch(`${base}${id}`,
+        { updatedContent: content },
+        { withCredentials: true }
+    )
+    return res.data
+}
 
 export {
     createTodo,
-    getTodos
+    getTodos,
+    toggleComplete,
+    deleteTodo,
+    updateTodo
 }

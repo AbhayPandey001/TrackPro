@@ -18,7 +18,6 @@ export default function Register() {
         username, email, password
       })
 
-      console.log(res.data)
       alert('Registration succesfull')
 
       navigate('/login')

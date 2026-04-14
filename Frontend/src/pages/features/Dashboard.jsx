@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../styles/DashboardStyles.css'
 import { logoutUser } from '../../api/authApi.js'
 import { useNavigate } from 'react-router-dom'
 import { createTodo, getTodos, toggleComplete, deleteTodo, updateTodo } from '../../api/todoApi.js'
+import { getCurrentUser } from '../../api/authApi.js'
 
 
 export default function Dashboard() {
@@ -12,6 +13,7 @@ export default function Dashboard() {
     const navigate = useNavigate()
     const [editId, setEditId] = useState(null);
     const [editContent, setEditContent] = useState("");
+    const [username, setUsername] = useState('')
 
     const handleEdit = (todo) => {
         setEditId(todo._id);
@@ -34,13 +36,16 @@ export default function Dashboard() {
             try {
                 const res = await getTodos()
                 setTodos(res.data)
+
+                //setting up the username
+                const user = await getCurrentUser()
+                setUsername(user.data.username)
             } catch (error) {
                 alert(error.response?.data?.message)
             }
         }
         fetchTodos()
     }, [])
-
 
     // crud functionality on todo
     const handleCreate = async () => {
@@ -81,7 +86,7 @@ export default function Dashboard() {
             alert("content cannot be empty");
             return;
         }
-        
+
         try {
             await updateTodo(id, editContent);
 
@@ -122,7 +127,7 @@ export default function Dashboard() {
 
             <div className="hero-section">
                 <h2 className="welcome-message">
-                    Welcome  ( sample username )
+                    Welcome {username}
                 </h2>
                 <div className="todo-input-section">
                     <input

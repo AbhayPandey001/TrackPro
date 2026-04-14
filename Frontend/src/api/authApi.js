@@ -5,9 +5,20 @@ const base = 'http://localhost:3000/api/v1/user'
 const logoutUser = async () => {
     const res = await axios.post(`${base}/logout`,
         {},
-       { withCredentials : true})
+        { withCredentials: true })
 
     return res.data
 }
 
-export {logoutUser}
+// get user
+const getCurrentUser = async () => {
+    const res = await axios.get(`${base}/getUser`,
+        { withCredentials: true }
+    )
+    return res.data
+}
+
+export {
+    logoutUser,
+    getCurrentUser
+}

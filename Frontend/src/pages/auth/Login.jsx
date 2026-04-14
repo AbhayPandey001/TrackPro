@@ -15,7 +15,6 @@ export default function Login() {
                 { username, password },
                 { withCredentials: true }
             )
-            alert('Logged in Succesfully')
             navigate('/dashboard')
         } catch (error) {
             alert(error.response?.data?.message || "Login failed");
